@@ -1,5 +1,8 @@
 package ro.ase.cts.seminar2;
 
+import ro.ase.cts.seminar2.exceptii.IlegalTransferException;
+import ro.ase.cts.seminar2.exceptii.InsufficientFundExdeption;
+
 public class CurrentAccount extends BankAccount {
 
 	public static double MAX_CREDIT=5000;
@@ -15,15 +18,23 @@ public class CurrentAccount extends BankAccount {
 	}
 
 	@Override
-	public void withdraw(double amount) {
-		// TODO Auto-generated method stub
-		
+	public void withdraw(double amount) throws InsufficientFundExdeption {
+		if(this.balance>=amount) {
+		this.balance-= amount;	
+		}
+		else {
+			throw new InsufficientFundExdeption("fonduri insuficiente");
+		}
 	}
 
 	@Override
-	public void trasfer(double amount, Account destination) {
-		// TODO Auto-generated method stub
-		
+	public void trasfer(double amount, Account destination) throws IlegalTransferException, InsufficientFundExdeption {
+		if(((BankAccount)destination).iban.equals(this.iban)) {
+			throw new IlegalTransferException("Conturile coincid!");
+		}
+		else
+			this.withdraw(amount);
+			destination.deposit(amount);
 	}
 
 	@Override
