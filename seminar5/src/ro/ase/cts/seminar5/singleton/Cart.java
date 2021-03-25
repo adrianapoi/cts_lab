@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ro.ase.cts.seminar5.factory.Product;
+
 public class Cart {
 
 	private static Map<String, Cart> instances = null;
 	private String type;
-	public ArrayList<String> products;
+	public ArrayList<Product> products;
 
 	private Cart() {
 		products = new ArrayList<>();
 	}
 
-	public ArrayList<String> getProducts() {
+	public ArrayList<Product> getProducts() {
 		return products;
 	}
 
