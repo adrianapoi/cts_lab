@@ -12,21 +12,17 @@ public class TechProductFactory extends AbstractProductFactory{
 
 	@Override
 	public Product makeProduct(int id) throws UnsupportedOperationException {
-		ArrayList<String> records= readRecordsFromFile("tech_products.cvs");
-		for(String record: records) {
-			String[] productAttributes =record.split(",");
-			if(Integer.valueOf(productAttributes[0]) == id) {
+		ArrayList<String> records = readRecordsFromFile("tech_products.csv");
+		for (String record : records) {
+			String[] productArrtributes = record.split(",");
+			if (Integer.valueOf(productArrtributes[0]) == id) {
 				TechProduct.TechProductBuilder productBuilder = new TechProduct.TechProductBuilder(id);
-				return productBuilder.setName(productAttributes[1])
-				.setModel(productAttributes[3])
-				.setManufacturere(productAttributes[2])
-				.setPrice(Float.valueOf(productAttributes[5]))
-				.getProduct();
-			}else {
-				return new TechProduct.TechProductBuilder(id).getProduct();
+				return productBuilder.setName(productArrtributes[1]).setManufacturer(productArrtributes[2])
+						.setModel(productArrtributes[3]).setPrice(Float.valueOf(productArrtributes[5])).getProduct();
 			}
 		}
 		return new TechProduct.TechProductBuilder(id).getProduct();
+
 	}
 
 	@Override
@@ -45,9 +41,15 @@ public class TechProductFactory extends AbstractProductFactory{
 	
 	private ArrayList<String> readRecordsFromFile(String fileName){
 		ArrayList<String> records=new ArrayList<String>();
+		System.out.println("Reading product records...");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		
 		URL fileUrl=getClass().getResource(fileName);
-		File productsFile=new File(fileUrl.getPath());
+		File productsFile=new File("C:\\Users\\Lenovo\\Desktop\\eclipse_workspace\\cts_lab\\seminar6\\src\\ro\\ase\\cts\\seminar6\\builder\\" + fileName);
 		try {
 			BufferedReader reader=new BufferedReader(new FileReader(productsFile));
 			String line;
@@ -64,6 +66,7 @@ public class TechProductFactory extends AbstractProductFactory{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("Finished reading product");
 		
 		return records;
 	}

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import ro.ase.cts.seminar6.builder.AbstractProductFactory;
 import ro.ase.cts.seminar6.builder.Product;
+import ro.ase.cts.seminar6.builder.TechProduct;
 import ro.ase.cts.seminar6.singleton.Cart;
 import ro.ase.cts.seminar6.builder.TechProductFactory;
 
@@ -25,14 +26,39 @@ public class Main {
 		}
 
 		System.out.println(productFactory.getCatalog());
-		userPreferences = scan.nextLine();
-		try {
-			int selectedId = Integer.valueOf(userPreferences);
-			myProduct = productFactory.makeProduct(selectedId);
-		} catch (NumberFormatException e) {
-			System.err.println("Selectie invalida");
-		}
+		//userPreferences = scan.nextLine();
 
+		
+			for(int i=0;i<2;i++) {
+				userPreferences = scan.nextLine();
+			try {
+				int selectedId = Integer.valueOf(userPreferences);
+				if(myShoppingCart.products.isEmpty()) {
+					myProduct=productFactory.makeProduct(selectedId);
+				}
+				for(Product p: myShoppingCart.products) {
+					if(p instanceof TechProduct)
+					{
+						TechProduct tempProduct=(TechProduct)p;
+					
+					if(tempProduct.getId()==selectedId) {
+						try {
+							myProduct=(Product) tempProduct.clone();
+						} catch (CloneNotSupportedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else {
+						myProduct=productFactory.makeProduct(selectedId);
+					}
+					}
+				}
+				myProduct = productFactory.makeProduct(selectedId);
+			} catch (NumberFormatException e) {
+				System.err.println("Selectie invalida");
+			}
+		}
+		
 		if (myProduct != null) {
 			myShoppingCart.products.add(myProduct);
 		}
@@ -41,5 +67,4 @@ public class Main {
 			System.out.println(p.getDescription());
 		}
 	}
-
 }
