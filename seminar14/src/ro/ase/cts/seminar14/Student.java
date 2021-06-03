@@ -1,6 +1,5 @@
-package ro.ase.cts.seminar13unit;
+package ro.ase.cts.seminar14;
 
-import ro.ase.cts.seminar13unit.exceptions.StudentExceptionWrongValue;
 
 public class Student {
 	/* constraints
@@ -57,8 +56,10 @@ public class Student {
 			throw new StudentExceptionWrongValue("empty dataset - note");
 		}
 		
-		if(note.length <=1)
-			throw new StudentExceptionWrongValue("not enough values to comute average");
+		if(note.length<=1) {
+			throw new StudentExceptionWrongValue("not enough values to compute average");
+		}
+		
 		int suma=0;
 		for(int i=0;i<note.length;i++) {
 			suma+=note[i];
