@@ -1,7 +1,7 @@
 package ro.ase.cts.seminar14;
 
 public enum TipBursaEnum {
-	MERTI(500), EXCELENTA(1000);
+	MERIT(500), EXCELENTA(1000);
 
 	int cuantum;
 
